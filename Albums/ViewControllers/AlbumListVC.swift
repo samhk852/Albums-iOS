@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import Combine
 
 class AlbumListVC: UIViewController {
     
@@ -36,6 +37,8 @@ class AlbumListVC: UIViewController {
     var albums: [Album] = []
     
     var viewModel: AlbumViewModelType! = AlbumListViewModel()
+    
+    private var cancellables: Set<AnyCancellable> = Set()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +60,17 @@ extension AlbumListVC {
     func setupViews() {
         view.backgroundColor = UIColor.systemBackground
         
+        setupSearchBar()
         setupTableView()
+    }
+    
+    func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search albums"
+        self.navigationItem.searchController = searchController
+        self.definesPresentationContext = true
     }
     
     func setupTableView() {
@@ -78,34 +91,34 @@ extension AlbumListVC {
     }
     
     @objc func setupNavItems() {
-        let bookmarkedBtn = UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(goToBookmarked))
+        let bookmarkedBtn = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(goToBookmarked))
         
         navigationItem.rightBarButtonItems = [bookmarkedBtn]
     }
     
     func setupDataSource() {
-        viewModel.albums = { [weak self] albums in
-            DispatchQueue.main.async { [weak self] in
+        viewModel.albums
+            .map{ $0.isLoading }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isLoading in
+                self?.setLoading(isLoading)
+            }).store(in: &cancellables)
+
+        viewModel.albums
+            .compactMap{ $0.value }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] albums in
                 self?.albums = albums
                 self?.tableView.reloadData()
-            }
-        }
+                self?.setEmpty(albums.count == 0)
+            }).store(in: &cancellables)
         
-        viewModel.refeshing = { [weak self] refreshing in
-            DispatchQueue.main.async { [weak self] in
-                if refreshing {
-                    self?.refreshControl.beginRefreshing()
-                } else {
-                    self?.refreshControl.endRefreshing()
-                }
-            }
-        }
-        
-        viewModel.error = { [weak self] message in
-            DispatchQueue.main.async { [weak self] in
+        viewModel.albums
+            .compactMap{ $0.error }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] message in
                 self?.show(title: "Error", message: message)
-            }
-        }
+            }).store(in: &cancellables)
         
         viewModel.start()
     }
@@ -139,6 +152,22 @@ extension AlbumListVC {
         vc.addAction(okayAction)
         present(vc, animated: true, completion: nil)
     }
+    
+    func setLoading(_ isLoading: Bool) {
+        if isLoading {
+            tableView.setLoading(true)
+        } else {
+            refreshControl.endRefreshing()
+        }
+    }
+    
+    func setEmpty(_ isEmpty: Bool) {
+        if isEmpty {
+            tableView.setEmpty("No albums found")
+        } else {
+            tableView.restoreBackgroundView()
+        }
+    }
 }
 
 
@@ -170,6 +199,13 @@ extension AlbumListVC: UITableViewDelegate, UITableViewDataSource {
         defer { tableView.deselectRow(at: indexPath, animated: true) }
         let album = albums[indexPath.row]
         openDetail(album: album)
+    }
+}
+
+extension AlbumListVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let text = searchController.searchBar.text
+        viewModel.didSearch?(text)
     }
 }
 
