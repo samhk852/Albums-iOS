@@ -23,7 +23,7 @@ protocol AlbumDetailViewModelType {
 class AlbumDetailViewModel: AlbumDetailViewModelType {
     
     private let album: Album
-    private let albumStore: AlbumStoreProtocol
+    @Injected(\.albumStoreProvider) private var albumStore: AlbumStoreProtocol
     private var cancellables: Set<AnyCancellable> = Set()
     
     private lazy var dateFormatter: DateFormatter = {
@@ -33,9 +33,8 @@ class AlbumDetailViewModel: AlbumDetailViewModelType {
         return dateFormatter
     }()
     
-    init(album: Album, albumStore: AlbumStoreProtocol = AlbumStore.shared) {
+    init(album: Album) {
         self.album = album
-        self.albumStore = albumStore
     }
     
     // inputs

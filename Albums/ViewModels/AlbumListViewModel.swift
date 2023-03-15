@@ -24,11 +24,9 @@ protocol AlbumViewModelType {
 class AlbumListViewModel: AlbumViewModelType {
     
     private let url: URL = URL(string: "https://itunes.apple.com/search?term=jack+johnson&entity=album")!
-    private let store: AlbumStoreProtocol
+    @Injected(\.albumStoreProvider) private var store: AlbumStoreProtocol
     
-    init(store: AlbumStoreProtocol = AlbumStore.shared) {
-        self.store = store
-    }
+    init() {}
     
     // inputs
     func start() {

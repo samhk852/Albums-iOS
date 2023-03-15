@@ -22,6 +22,9 @@
 		2271FAB325D9C12D001EA9DB /* AlbumDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2271FAA925D9C12D001EA9DB /* AlbumDetailVC.swift */; };
 		2271FAB425D9C12D001EA9DB /* AlbumListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2271FAAA25D9C12D001EA9DB /* AlbumListVC.swift */; };
 		2271FAB525D9C12D001EA9DB /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2271FAAC25D9C12D001EA9DB /* Album.swift */; };
+		739CE41829C1C24A00487DBE /* Injected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739CE41729C1C24A00487DBE /* Injected.swift */; };
+		739CE41A29C1C25500487DBE /* InjectedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739CE41929C1C25500487DBE /* InjectedValues.swift */; };
+		739CE41C29C1C26000487DBE /* StoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739CE41B29C1C26000487DBE /* StoreProvider.swift */; };
 		9455E21DCE81488193C28492 /* Pods_Albums.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30DE11810236CE60602B5CC /* Pods_Albums.framework */; };
 		AB05E0F31986E9A9A4054D06 /* Pods_AlbumsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A395C226AFDAA869D1863F51 /* Pods_AlbumsTests.framework */; };
 		F08DB46D412DD1AAE07825D8 /* Pods_Albums_AlbumsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36ED9F9F91C4E2B5DE6C327F /* Pods_Albums_AlbumsUITests.framework */; };
@@ -70,6 +73,9 @@
 		2271FAAC25D9C12D001EA9DB /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		36ED9F9F91C4E2B5DE6C327F /* Pods_Albums_AlbumsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Albums_AlbumsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64B2DED47BF4A220F7A95C46 /* Pods-Albums-AlbumsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Albums-AlbumsUITests.release.xcconfig"; path = "Target Support Files/Pods-Albums-AlbumsUITests/Pods-Albums-AlbumsUITests.release.xcconfig"; sourceTree = "<group>"; };
+		739CE41729C1C24A00487DBE /* Injected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injected.swift; sourceTree = "<group>"; };
+		739CE41929C1C25500487DBE /* InjectedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectedValues.swift; sourceTree = "<group>"; };
+		739CE41B29C1C26000487DBE /* StoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProvider.swift; sourceTree = "<group>"; };
 		8E30EC7FB503323EF8BE0E45 /* Pods-AlbumsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlbumsTests.release.xcconfig"; path = "Target Support Files/Pods-AlbumsTests/Pods-AlbumsTests.release.xcconfig"; sourceTree = "<group>"; };
 		98979549F64F376A0D3CDC03 /* Pods-Albums.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Albums.release.xcconfig"; path = "Target Support Files/Pods-Albums/Pods-Albums.release.xcconfig"; sourceTree = "<group>"; };
 		A30DE11810236CE60602B5CC /* Pods_Albums.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Albums.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +136,7 @@
 		2271FA6225D9C032001EA9DB /* Albums */ = {
 			isa = PBXGroup;
 			children = (
+				739CE41629C1C20600487DBE /* Providers */,
 				2271FAA425D9C12D001EA9DB /* Stores */,
 				2271FAA725D9C12D001EA9DB /* ViewControllers */,
 				2271FAA025D9C12D001EA9DB /* ViewModels */,
@@ -196,6 +203,16 @@
 				2271FAAC25D9C12D001EA9DB /* Album.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		739CE41629C1C20600487DBE /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				739CE41729C1C24A00487DBE /* Injected.swift */,
+				739CE41929C1C25500487DBE /* InjectedValues.swift */,
+				739CE41B29C1C26000487DBE /* StoreProvider.swift */,
+			);
+			path = Providers;
 			sourceTree = "<group>";
 		};
 		C9AF39243F7D1C128B9631FC /* Pods */ = {
@@ -460,7 +477,9 @@
 			files = (
 				2271FAAD25D9C12D001EA9DB /* BookmarkedAlbumListViewModel.swift in Sources */,
 				2271FAAF25D9C12D001EA9DB /* AlbumListViewModel.swift in Sources */,
+				739CE41A29C1C25500487DBE /* InjectedValues.swift in Sources */,
 				2271FAB425D9C12D001EA9DB /* AlbumListVC.swift in Sources */,
+				739CE41C29C1C26000487DBE /* StoreProvider.swift in Sources */,
 				2271FAB325D9C12D001EA9DB /* AlbumDetailVC.swift in Sources */,
 				2271FAB125D9C12D001EA9DB /* Store.swift in Sources */,
 				2271FAB225D9C12D001EA9DB /* BookmarkedAlbumListVC.swift in Sources */,
@@ -469,6 +488,7 @@
 				2271FAAE25D9C12D001EA9DB /* AlbumDetailViewModel.swift in Sources */,
 				2271FAB025D9C12D001EA9DB /* AlbumStore.swift in Sources */,
 				2271FAB525D9C12D001EA9DB /* Album.swift in Sources */,
+				739CE41829C1C24A00487DBE /* Injected.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
